@@ -1,0 +1,7 @@
+dirSchema: 
+  - id: "domain"
+    paths:
+      - "/application"
+      - "/core"
+      - "/infrastucture"
+      - "interface"
