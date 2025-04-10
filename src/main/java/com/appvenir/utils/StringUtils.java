@@ -1,5 +1,7 @@
 package com.appvenir.utils;
 
+import com.appvenir.core.PackageName;
+
 public class StringUtils {
     public static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
@@ -14,5 +16,10 @@ public class StringUtils {
 
     public static String nextDoubleLine(String text) {
         return "\n\n" + text;
+    }
+
+    public static String convertPackagetoPath(PackageName packageName)
+    {
+        return "/" + packageName.value().replaceAll("\\.", "/");
     }
 }
