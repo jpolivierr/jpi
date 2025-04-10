@@ -39,6 +39,20 @@ public class IO {
         return content.toString();
     }
 
+    public static void createPathIfNotExist(String path) throws IOException
+    {
+        Condition.notNull(path, "Path cannot be null");
+        Path filePath = Paths.get(path).normalize();
+        Files.createDirectories(filePath);
+    }
+
+    public static void deletePath(String path) throws IOException
+    {
+        Condition.notNull(path, "Path cannot be null");
+        Path filePath = Paths.get(path).normalize();
+        Files.deleteIfExists(filePath);
+    }
+
     public static String getFileInputStream(String filePath)
     {
         Condition.notNull(filePath, "FilePath cannot be null");
