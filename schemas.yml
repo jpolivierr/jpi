@@ -1,7 +1,8 @@
-dirSchema: 
+dirSchemas: 
   - id: "domain"
     paths:
       - "/application"
-      - "/core"
-      - "/infrastucture"
-      - "interface"
+      - "/interface"
+classNameFormat:
+  controller: ${name}Controller
+  service: ${name}Service
