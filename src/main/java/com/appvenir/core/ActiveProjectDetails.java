@@ -1,10 +1,15 @@
 package com.appvenir.core;
 
+import java.nio.file.Paths;
+
+import com.appvenir.utils.StringUtils;
+
 public class ActiveProjectDetails {
     private final String rootDir;
     private final String sourceDir;
     private final String buildToolFileName;
-    private final String rootPackageName;
+    private final PackageName rootPackageName;
+    private final String appRootDir;
 
     private ActiveProjectDetails(Builder builder)
     {
@@ -12,13 +17,14 @@ public class ActiveProjectDetails {
         this.sourceDir = builder.sourceDir;
         this.buildToolFileName = builder.buildToolFileName;
         this.rootPackageName = builder.rootPackageName;
+        this.appRootDir = Paths.get(rootDir + sourceDir + StringUtils.convertPackagetoPath(rootPackageName)).normalize().toString();
     }
 
     public static class Builder {
         private String rootDir;
         private String sourceDir;
         private String buildToolFileName;
-        private String rootPackageName;
+        private PackageName rootPackageName;
 
         public Builder setRootDir(String rootDir) {
             this.rootDir = rootDir;
@@ -35,7 +41,7 @@ public class ActiveProjectDetails {
             return this;
         }
 
-        public Builder setRootPackageName(String rootPackageName) {
+        public Builder setRootPackageName(PackageName rootPackageName) {
             this.rootPackageName = rootPackageName;
             return this;
         }
@@ -58,8 +64,12 @@ public class ActiveProjectDetails {
         return buildToolFileName;
     }
 
-    public String getRootPackageName() {
+    public PackageName getRootPackageName() {
         return rootPackageName;
+    }
+
+    public String getAppRootDir() {
+        return appRootDir;
     }
 
     @Override
@@ -68,7 +78,4 @@ public class ActiveProjectDetails {
                 + buildToolFileName + ", rootPackageName=" + rootPackageName + "]";
     }
 
-    
-
-    
 }

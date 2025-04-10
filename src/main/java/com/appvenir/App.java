@@ -5,16 +5,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.ActiveProjectDetailsFactory;
+import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.javaFile.AccessModifier;
 import com.appvenir.core.javaFile.ClassDetails;
 import com.appvenir.core.javaFile.JavaFileDetails;
 import com.appvenir.core.javaFile.JavaFileGenerator;
 import com.appvenir.core.javaFile.PackageName;
 import com.appvenir.core.javaFile.TypeVariable;
+import com.appvenir.core.model.DirSchema;
 import com.appvenir.core.model.Schemas;
 import com.appvenir.infrastructure.config.ConfigLoader;
 import com.appvenir.infrastructure.config.SchemaPropertyLoader;
@@ -34,11 +37,28 @@ public class App
     {
         String projectRootDir = "/Users/Fred/cli/jpi";
         String configFile = "/Users/Fred/cli/jpi/config.properties";
-        ConfigLoader configLoader = ConfigLoader.getInstance(configFile);
 
-        // ActiveProjectDetails activeProjectDetails = new ActiveProjectDetails(projectRootDir, configLoader);
+        ConfigLoader configLoader = ConfigLoader.getInstance(configFile);
+        SchemaPropertyLoader schemaPropertyLoader = SchemaPropertyLoader.getInstance(configLoader, YamlParser.newInstant());
+
         ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, configLoader);
         ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
+        Logger.info(activeProjectDetails.getAppRootDir());
+        Schemas schemas = schemaPropertyLoader.getSchemas();
+
+        String id = "domain";
+        DirSchema dirSchema = schemas.getDirSchema("domain")
+                                .orElseThrow(() -> new NoSuchElementException("Could not find a dirSchema with id: " + id));
+
+        CreateFileStructureAction createFileStructureAction = new CreateFileStructureAction(dirSchema, activeProjectDetails);
+
+        try {
+            createFileStructureAction.execute();
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        
         Logger.info(activeProjectDetails.toString());
 
         // ClassDetails demoClassDetails = new ClassDetails("demo", packageName);

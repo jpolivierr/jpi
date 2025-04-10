@@ -29,7 +29,7 @@ public class ActiveProjectDetailsFactory {
                     .setRootDir(rootDir)
                     .setSourceDir(configLoader.getProjectSourceDir())
                     .setBuildToolFileName(buildToolFilename)
-                    .setRootPackageName(getPackageName(buildToolFilename))
+                    .setRootPackageName(PackageName.create(getPackageName(buildToolFilename)))
                     .build();
     }
 
