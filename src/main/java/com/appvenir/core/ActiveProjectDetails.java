@@ -5,34 +5,34 @@ import java.nio.file.Paths;
 import com.appvenir.utils.StringUtils;
 
 public class ActiveProjectDetails {
-    private final String rootDir;
-    private final String sourceDir;
+    private final String rootPath;
+    private final String sourcePath;
     private final String buildToolFileName;
     private final PackageName rootPackageName;
-    private final String appRootDir;
+    private final String appRootPath;
 
     private ActiveProjectDetails(Builder builder)
     {
-        this.rootDir = builder.rootDir;
-        this.sourceDir = builder.sourceDir;
+        this.rootPath = builder.rootPath;
+        this.sourcePath = builder.sourcePath;
         this.buildToolFileName = builder.buildToolFileName;
         this.rootPackageName = builder.rootPackageName;
-        this.appRootDir = Paths.get(rootDir + sourceDir + StringUtils.convertPackagetoPath(rootPackageName)).normalize().toString();
+        this.appRootPath = Paths.get(rootPath + sourcePath + StringUtils.convertPackagetoPath(rootPackageName)).normalize().toString();
     }
 
     public static class Builder {
-        private String rootDir;
-        private String sourceDir;
+        private String rootPath;
+        private String sourcePath;
         private String buildToolFileName;
         private PackageName rootPackageName;
 
-        public Builder setRootDir(String rootDir) {
-            this.rootDir = rootDir;
+        public Builder setRootPath(String rootPath) {
+            this.rootPath = rootPath;
             return this;
         }
 
-        public Builder setSourceDir(String sourceDir) {
-            this.sourceDir = sourceDir;
+        public Builder setSourcePath(String sourcePath) {
+            this.sourcePath = sourcePath;
             return this;
         }
 
@@ -52,12 +52,12 @@ public class ActiveProjectDetails {
         }
     }
 
-    public String getRootDir() {
-        return rootDir;
+    public String getRootPath() {
+        return rootPath;
     }
 
-    public String getSourceDir() {
-        return sourceDir;
+    public String getSourcePath() {
+        return sourcePath;
     }
 
     public String getBuildToolFileName() {
@@ -68,13 +68,13 @@ public class ActiveProjectDetails {
         return rootPackageName;
     }
 
-    public String getAppRootDir() {
-        return appRootDir;
+    public String getAppRootPath() {
+        return appRootPath;
     }
 
     @Override
     public String toString() {
-        return "ActiveProjectDetails [rootDir=" + rootDir + ", sourceDir=" + sourceDir + ", buildToolFileName="
+        return "ActiveProjectDetails [rootPath=" + rootPath + ", sourcePath=" + sourcePath + ", buildToolFileName="
                 + buildToolFileName + ", rootPackageName=" + rootPackageName + "]";
     }
 

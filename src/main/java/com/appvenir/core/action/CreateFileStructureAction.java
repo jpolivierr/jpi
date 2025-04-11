@@ -14,14 +14,14 @@ public class CreateFileStructureAction implements FileAction {
     private final DirSchema dirSchema;
     private final int pathCount;
     private final List<String> paths;
-    private final String projectPath;
+    private final String appRootPath;
 
     public CreateFileStructureAction(DirSchema dirSchema, ActiveProjectDetails activeProjectDetails)
     {
         this.dirSchema = dirSchema;
         this.pathCount = dirSchema.getPaths().size();
         this.paths = dirSchema.getPaths();
-        this.projectPath = activeProjectDetails.getAppRootDir();
+        this.appRootPath = activeProjectDetails.getAppRootPath();
         if(pathCount > MAX_FILE_CREATION)
         {
             throw new IllegalStateException("Maximum path creation reached.");
@@ -33,8 +33,8 @@ public class CreateFileStructureAction implements FileAction {
         for(String path : paths)
         {
             try {
-                Logger.info("Create path: " + projectPath + path);
-                IO.createPathIfNotExist(projectPath + path);
+                Logger.info("Create path: " + appRootPath + path);
+                IO.createPathIfNotExist(appRootPath + path);
             } 
             catch (FileAlreadyExistsException e) {
                 Logger.warn("taskId: " + dirSchema.getId() + "File path already exists: " + path);
@@ -46,8 +46,8 @@ public class CreateFileStructureAction implements FileAction {
     {
         for(String path : paths)
         {
-            Logger.info("Delete path: " + projectPath + path);
-            IO.deletePath(projectPath + path);
+            Logger.info("Delete path: " + appRootPath + path);
+            IO.deletePath(appRootPath + path);
         }
     }
 

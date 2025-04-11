@@ -32,9 +32,9 @@ public class ConfigLoader {
         return properties.getProperty("app.schemas");
     }
 
-    public String getProjectSourceDir()
+    public String getJavaProjectPath()
     {
-        return properties.getProperty("project.source.dir");
+        return properties.getProperty("project.java.dir");
     }
 
     public List<String> getBuildToolFileNames()

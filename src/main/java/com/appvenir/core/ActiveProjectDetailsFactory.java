@@ -9,25 +9,25 @@ import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolFactory;
 import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolParser;
 
 public class ActiveProjectDetailsFactory {
-    private final String rootDir;
+    private final String rootPath;
     private final ConfigLoader configLoader;
 
-    public ActiveProjectDetailsFactory(String rootDir, ConfigLoader configLoader){
-        this.rootDir = rootDir;
+    public ActiveProjectDetailsFactory(String rootPath, ConfigLoader configLoader){
+        this.rootPath = rootPath;
         this.configLoader = configLoader;
     }
 
-    public static ActiveProjectDetailsFactory newInstance(String rootDir, ConfigLoader configLoader)
+    public static ActiveProjectDetailsFactory newInstance(String rootPath, ConfigLoader configLoader)
     {
-        return new ActiveProjectDetailsFactory(rootDir, configLoader);
+        return new ActiveProjectDetailsFactory(rootPath, configLoader);
     }
 
     public ActiveProjectDetails createFromProject() 
     {
         String buildToolFilename = getBuildToolFileName();
         return new ActiveProjectDetails.Builder()
-                    .setRootDir(rootDir)
-                    .setSourceDir(configLoader.getProjectSourceDir())
+                    .setRootPath(rootPath)
+                    .setSourcePath(configLoader.getJavaProjectPath())
                     .setBuildToolFileName(buildToolFilename)
                     .setRootPackageName(PackageName.create(getPackageName(buildToolFilename)))
                     .build();
@@ -37,7 +37,7 @@ public class ActiveProjectDetailsFactory {
 
     private String getBuildToolFileName()
     {
-        List<String> currentFiles = IO.getFileNamesFromDir(rootDir);
+        List<String> currentFiles = IO.getFileNamesFromDir(rootPath);
         List<String> buildTollFileNames = configLoader.getBuildToolFileNames();
         String currentProjectBuildToolFile = null;
 
@@ -62,7 +62,7 @@ public class ActiveProjectDetailsFactory {
     {
         Optional<BuildToolParser> optionalBuildToolParcer = BuildToolFactory.getBuildToolParser(buildToolFilename);
         BuildToolParser buildToolParcer = optionalBuildToolParcer.orElseThrow(() -> new IllegalStateException("Could not find a valid build tool parser."));
-        return buildToolParcer.getProjectPackage(rootDir + "/" + buildToolFilename);
+        return buildToolParcer.getProjectPackage(rootPath + "/" + buildToolFilename);
     }
     
 }

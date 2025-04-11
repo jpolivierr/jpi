@@ -43,7 +43,7 @@ public class App
 
         ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, configLoader);
         ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
-        Logger.info(activeProjectDetails.getAppRootDir());
+        Logger.info(activeProjectDetails.getAppRootPath());
         Schemas schemas = schemaPropertyLoader.getSchemas();
 
         String id = "domain";
