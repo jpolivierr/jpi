@@ -1,29 +1,23 @@
 package com.appvenir.infrastructure.config;
 
 import java.io.IOException;
-
-import com.appvenir.core.model.Schemas;
 import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.infrastructure.system.parcers.file.FileParser;
 
 public class SchemaPropertyLoader {
     private static SchemaPropertyLoader instance;
-    private final ConfigLoader configLoader;
     private final FileParser fileParser;
-    private final Schemas schemas;
 
-    private SchemaPropertyLoader(ConfigLoader configLoader, FileParser fileParser) 
+    private SchemaPropertyLoader(FileParser fileParser) 
     {
-        this.configLoader = configLoader;
         this.fileParser = fileParser;
-        this.schemas = loadSchemas(configLoader.getSchemasPath());
     }
 
-    private Schemas loadSchemas(String filePath) 
+    public <T> T getSchemas(String filePath, Class<T> clazz) 
     {
         try 
         {
-            return fileParser.getObjectValue(filePath, Schemas.class);
+            return fileParser.getObjectValue(filePath, clazz);
         } catch (IOException e) 
         {
             Logger.error("Failed to load schemas from file: " + filePath);
@@ -32,23 +26,13 @@ public class SchemaPropertyLoader {
         }
     }
 
-    public Schemas getSchemas() 
-    {
-        return schemas;
-    }
-
-    public static SchemaPropertyLoader getInstance(ConfigLoader configLoader, FileParser fileParser) 
+    public static SchemaPropertyLoader getInstance(FileParser fileParser) 
     {
         if (instance == null) 
         {
-            instance = new SchemaPropertyLoader(configLoader, fileParser);
+            instance = new SchemaPropertyLoader(fileParser);
         }
         return instance;
-    }
-
-    public ConfigLoader getConfigLoader() 
-    {
-        return configLoader;
     }
 
 }

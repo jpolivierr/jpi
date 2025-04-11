@@ -10,34 +10,36 @@ import com.appvenir.infrastructure.system.logger.Logger;
 public class ConfigLoader {
     private static ConfigLoader instance;
     private final Properties properties;
+    private final String configFile;
+    private boolean propertyLoaded = false;
+    private final CliConfig cliConfig;
 
     private ConfigLoader(String configFile)
     {
         properties = new Properties();
-        loadProperties(configFile);
+        this.configFile = configFile;
+        loadProperties();
+        this.cliConfig = buildCliConfig();
     }
 
-    private void loadProperties(String configFile)
+    private void loadProperties()
     {
-        try (FileInputStream inputStream = new FileInputStream(configFile)) {
+        if(!propertyLoaded)
+        {
+            try (FileInputStream inputStream = new FileInputStream(configFile)) {
             Logger.info("Loading configuration.");
             properties.load(inputStream);
-        } catch (Exception e) {
-            Logger.error("Could not load config file.");
+            propertyLoaded = true;
+            } catch (Exception e) 
+            {
+                Logger.error("Could not load config file.");
+            }
+        }else {
+            Logger.warn("Properties already loaded");
         }
     }
 
-    public String getSchemasPath()
-    {
-        return properties.getProperty("app.schemas");
-    }
-
-    public String getJavaProjectPath()
-    {
-        return properties.getProperty("project.java.dir");
-    }
-
-    public List<String> getBuildToolFileNames()
+    private List<String> getBuildToolFileNames()
     {
         String fileNames = properties.getProperty("project.buildTool.fileNames");
         if(fileNames == null)
@@ -47,8 +49,24 @@ public class ConfigLoader {
         return Arrays.asList(fileNames.split(","));
     }
 
-    public static ConfigLoader getInstance(String configFile) {
-        if (instance == null) {
+    public CliConfig buildCliConfig()
+    {
+        return new CliConfig.Builder()
+            .setSchemasPath(properties.getProperty("app.schemas"))
+            .setJavaProjectPath(properties.getProperty("project.java.dir"))
+            .setBuildToolFileNames(getBuildToolFileNames())
+            .build();
+    }
+
+    public CliConfig getCliConfig()
+    {
+        return cliConfig;
+    }
+
+    public static ConfigLoader getInstance(String configFile) 
+    {
+        if (instance == null) 
+        {
             instance = new ConfigLoader(configFile);
         }
         return instance;

@@ -3,23 +3,23 @@ package com.appvenir.core;
 import java.util.List;
 import java.util.Optional;
 
-import com.appvenir.infrastructure.config.ConfigLoader;
+import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.infrastructure.system.io.IO;
 import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolFactory;
 import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolParser;
 
 public class ActiveProjectDetailsFactory {
     private final String rootPath;
-    private final ConfigLoader configLoader;
+    private final CliConfig cliConfig;
 
-    public ActiveProjectDetailsFactory(String rootPath, ConfigLoader configLoader){
+    private ActiveProjectDetailsFactory(String rootPath, CliConfig cliConfig){
         this.rootPath = rootPath;
-        this.configLoader = configLoader;
+        this.cliConfig = cliConfig;
     }
 
-    public static ActiveProjectDetailsFactory newInstance(String rootPath, ConfigLoader configLoader)
+    public static ActiveProjectDetailsFactory newInstance(String rootPath, CliConfig cliConfig)
     {
-        return new ActiveProjectDetailsFactory(rootPath, configLoader);
+        return new ActiveProjectDetailsFactory(rootPath, cliConfig);
     }
 
     public ActiveProjectDetails createFromProject() 
@@ -27,7 +27,7 @@ public class ActiveProjectDetailsFactory {
         String buildToolFilename = getBuildToolFileName();
         return new ActiveProjectDetails.Builder()
                     .setRootPath(rootPath)
-                    .setSourcePath(configLoader.getJavaProjectPath())
+                    .setSourcePath(cliConfig.getJavaProjectPath())
                     .setBuildToolFileName(buildToolFilename)
                     .setRootPackageName(PackageName.create(getPackageName(buildToolFilename)))
                     .build();
@@ -38,7 +38,7 @@ public class ActiveProjectDetailsFactory {
     private String getBuildToolFileName()
     {
         List<String> currentFiles = IO.getFileNamesFromDir(rootPath);
-        List<String> buildTollFileNames = configLoader.getBuildToolFileNames();
+        List<String> buildTollFileNames = cliConfig.getBuildToolFileNames();
         String currentProjectBuildToolFile = null;
 
         for(String fileName: buildTollFileNames)

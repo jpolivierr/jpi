@@ -2,6 +2,7 @@ package com.appvenir;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +28,8 @@ import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolFactory;
 import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolParser;
 import com.appvenir.infrastructure.system.parcers.buildTool.MavenBuildToolParser;
 import com.appvenir.infrastructure.system.parcers.file.YamlParser;
+import com.appvenir.init.CliContext;
+import com.appvenir.init.CliLauncher;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -35,17 +38,15 @@ public class App
 {
     public static void main( String[] args )
     {
+        CliLauncher.launch();
         String projectRootDir = "/Users/Fred/cli/jpi";
-        String configFile = "/Users/Fred/cli/jpi/config.properties";
 
-        ConfigLoader configLoader = ConfigLoader.getInstance(configFile);
-        SchemaPropertyLoader schemaPropertyLoader = SchemaPropertyLoader.getInstance(configLoader, YamlParser.newInstant());
-
-        ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, configLoader);
+        ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, CliContext.getCliConfig());
         ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
         Logger.info(activeProjectDetails.getAppRootPath());
-        Schemas schemas = schemaPropertyLoader.getSchemas();
 
+        Schemas schemas = CliContext.getSchemas();
+        
         String id = "domain";
         DirSchema dirSchema = schemas.getDirSchema("domain")
                                 .orElseThrow(() -> new NoSuchElementException("Could not find a dirSchema with id: " + id));
@@ -59,15 +60,25 @@ public class App
             e.printStackTrace();
         }
         
-        Logger.info(activeProjectDetails.toString());
+        // String appDir = App.getAppDirectoryPath();
+        // System.out.println("App is running from: " + appDir);   
+     }
 
-        // ClassDetails demoClassDetails = new ClassDetails("demo", packageName);
-        // demoClassDetails.addProperty(TypeVariable.newInstant(AccessModifier.PUBLIC, String.class, "name"));
+    // public static String getAppDirectoryPath() {
+    //     try {
+    //         File jarFile = new File(App.class
+    //             .getProtectionDomain()
+    //             .getCodeSource()
+    //             .getLocation()
+    //             .toURI());
 
-        // JavaFileDetails DemoFileDetails = new JavaFileDetails(demoClassDetails);
-        // JavaFileGenerator javaFileGenerator = new JavaFileGenerator(filePath, DemoFileDetails);
-        // javaFileGenerator.execute();
-        // yamlParcer();
-    }
+    //         // If this is a jar file, return its parent directory
+    //         File dir = jarFile.isFile() ? jarFile.getParentFile() : jarFile;
+    //         return dir.getAbsolutePath();
+
+    //     } catch (URISyntaxException e) {
+    //         throw new RuntimeException("Unable to determine application directory", e);
+    //     }
+    // }
 
 }

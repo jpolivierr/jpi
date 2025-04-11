@@ -1,0 +1,47 @@
+package com.appvenir.init;
+
+import com.appvenir.core.model.Schemas;
+import com.appvenir.infrastructure.config.CliConfig;
+import com.appvenir.infrastructure.config.ConfigLoader;
+import com.appvenir.infrastructure.config.SchemaPropertyLoader;
+import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.infrastructure.system.parcers.file.YamlParser;
+
+public class CliLauncher {
+
+    private static CliLauncher instance;
+    private static boolean hasRun = false;
+
+    private CliLauncher(){}
+
+    private void run() {
+        String configFile = "/Users/Fred/cli/jpi/config.properties";
+
+        ConfigLoader configLoader = ConfigLoader.getInstance(configFile);
+        CliConfig cliConfig = configLoader.getCliConfig();
+        
+        SchemaPropertyLoader schemaPropertyLoader = SchemaPropertyLoader.getInstance(YamlParser.newInstant());
+        Schemas schemas = schemaPropertyLoader.getSchemas(cliConfig.getSchemasPath(), Schemas.class);
+
+        CliContext.initialize(cliConfig, schemas);
+        SchemaPropertyLoader.getInstance(YamlParser.newInstant());
+    }
+
+    public static synchronized void launch() {
+        if (!hasRun) {
+            getInstance().run();
+            hasRun = true;
+        } else {
+            Logger.warn("CLI has already been launched.");
+        }
+    }
+
+    private static CliLauncher getInstance() {
+        if (instance == null) {
+            instance = new CliLauncher();
+        }
+        return instance;
+    }
+}
+
+
