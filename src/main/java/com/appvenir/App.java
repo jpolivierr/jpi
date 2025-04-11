@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.appvenir.commands.DirSchema;
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.ActiveProjectDetailsFactory;
 import com.appvenir.core.action.CreateFileStructureAction;
@@ -18,7 +19,6 @@ import com.appvenir.core.javaFile.JavaFileDetails;
 import com.appvenir.core.javaFile.JavaFileGenerator;
 import com.appvenir.core.javaFile.PackageName;
 import com.appvenir.core.javaFile.TypeVariable;
-import com.appvenir.core.model.DirSchema;
 import com.appvenir.core.model.Schemas;
 import com.appvenir.infrastructure.config.ConfigLoader;
 import com.appvenir.infrastructure.config.SchemaPropertyLoader;
@@ -34,35 +34,56 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-public class App 
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+
+@Command(
+    name = "JPI",
+    version = "1.0.0",
+    description = """
+                    JPI (Java Project Initializer) is a powerful CLI tool designed to streamline the creation and management of Java-based applications. 
+                    It simplifies project setup, dependency management, and build processes, helping developers efficiently handle their Java projects from start to finish.
+                 """,
+    subcommands = { DirSchema.class }
+)
+public class App implements Runnable
 {
     public static void main( String[] args )
     {
         CliLauncher.launch();
         String projectRootDir = "/Users/Fred/cli/jpi";
 
-        ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, CliContext.getCliConfig());
-        ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
-        Logger.info(activeProjectDetails.getAppRootPath());
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
+    }
 
-        Schemas schemas = CliContext.getSchemas();
+    @Override
+    public void run() {
+        System.out.println("This is the main CLI application");
+    }
+
+        // ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootDir, CliContext.getCliConfig());
+        // ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
+        // Logger.info(activeProjectDetails.getAppRootPath());
+
+        // Schemas schemas = CliContext.getSchemas();
         
-        String id = "domain";
-        DirSchema dirSchema = schemas.getDirSchema("domain")
-                                .orElseThrow(() -> new NoSuchElementException("Could not find a dirSchema with id: " + id));
+        // String id = "domain";
+        // DirSchema dirSchema = schemas.getDirSchema("domain")
+        //                         .orElseThrow(() -> new NoSuchElementException("Could not find a dirSchema with id: " + id));
 
-        CreateFileStructureAction createFileStructureAction = new CreateFileStructureAction(dirSchema, activeProjectDetails);
+        // CreateFileStructureAction createFileStructureAction = new CreateFileStructureAction(dirSchema, activeProjectDetails);
 
-        try {
-            createFileStructureAction.execute();
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-            e.printStackTrace();
-        }
+        // try {
+        //     createFileStructureAction.execute();
+        // } catch (Exception e) {
+        //     Logger.error(e.getMessage());
+        //     e.printStackTrace();
+        // }
         
         // String appDir = App.getAppDirectoryPath();
         // System.out.println("App is running from: " + appDir);   
-     }
+     
 
     // public static String getAppDirectoryPath() {
     //     try {
