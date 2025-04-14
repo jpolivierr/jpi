@@ -1,8 +1,9 @@
-dirSchemas: 
+pathLayouts: 
   - id: "domain"
     paths:
       - "/application"
       - "/interface"
-classNameFormat:
-  controller: ${name}Controller
-  service: ${name}Service
+packages:
+  controller: "interface.rest"
+  web: "interface.web"
+  webFilters: "interface.filters"
