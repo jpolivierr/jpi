@@ -9,10 +9,11 @@ import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import com.appvenir.commands.DirSchema;
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.ActiveProjectDetailsFactory;
 import com.appvenir.core.action.CreateFileStructureAction;
+import com.appvenir.core.commands.PackageCommand;
+import com.appvenir.core.commands.PathLayoutCommand;
 import com.appvenir.core.javaFile.AccessModifier;
 import com.appvenir.core.javaFile.ClassDetails;
 import com.appvenir.core.javaFile.JavaFileDetails;
@@ -20,8 +21,8 @@ import com.appvenir.core.javaFile.JavaFileGenerator;
 import com.appvenir.core.javaFile.PackageName;
 import com.appvenir.core.javaFile.TypeVariable;
 import com.appvenir.core.model.Schemas;
-import com.appvenir.infrastructure.config.ConfigLoader;
-import com.appvenir.infrastructure.config.SchemaPropertyLoader;
+import com.appvenir.infrastructure.loaders.ConfigLoader;
+import com.appvenir.infrastructure.loaders.SchemaPropertyLoader;
 import com.appvenir.infrastructure.providers.MapperProvider;
 import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolFactory;
@@ -44,14 +45,16 @@ import picocli.CommandLine.Command;
                     JPI (Java Project Initializer) is a powerful CLI tool designed to streamline the creation and management of Java-based applications. 
                     It simplifies project setup, dependency management, and build processes, helping developers efficiently handle their Java projects from start to finish.
                  """,
-    subcommands = { DirSchema.class }
+    subcommands = { 
+        PathLayoutCommand.class,
+        PackageCommand.class
+    }
 )
 public class App implements Runnable
 {
     public static void main( String[] args )
     {
         CliLauncher.launch();
-        String projectRootDir = "/Users/Fred/cli/jpi";
 
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);

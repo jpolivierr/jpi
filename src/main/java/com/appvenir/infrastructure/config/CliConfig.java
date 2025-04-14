@@ -14,7 +14,7 @@ public class CliConfig {
         this.buildToolFileNames = builder.buildToolFileNames;
     }
 
-    static class Builder {
+    public static class Builder {
         private String JavaProjectPath;
         private String schemasPath;
         private List<String> buildToolFileNames;

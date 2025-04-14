@@ -46,6 +46,22 @@ public class IO {
         Files.createDirectories(filePath);
     }
 
+    public static void createFileIfNotExist(String path) throws IOException {
+        Condition.notNull(path, "Path cannot be null");
+    
+        Path filePath = Paths.get(path).normalize();
+        Path parentDir = filePath.getParent();
+    
+        if (parentDir != null && !Files.exists(parentDir)) {
+            Files.createDirectories(parentDir);
+        }
+    
+        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
+        }
+    }
+    
+
     public static void deletePath(String path) throws IOException
     {
         Condition.notNull(path, "Path cannot be null");
