@@ -4,24 +4,23 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
-import com.appvenir.core.ActiveProjectDetails;
-import com.appvenir.core.model.DirSchema;
+import com.appvenir.core.model.PathLayout;
 import com.appvenir.infrastructure.system.io.IO;
 import com.appvenir.infrastructure.system.logger.Logger;
 
 public class CreateFileStructureAction implements FileAction {
     private final int MAX_FILE_CREATION = 5;
-    private final DirSchema dirSchema;
+    private final PathLayout pathLayout;
     private final int pathCount;
     private final List<String> paths;
-    private final String appRootPath;
+    private final String targetPath;
 
-    public CreateFileStructureAction(DirSchema dirSchema, ActiveProjectDetails activeProjectDetails)
+    public CreateFileStructureAction(PathLayout pathLayout, String targetPath)
     {
-        this.dirSchema = dirSchema;
-        this.pathCount = dirSchema.getPaths().size();
-        this.paths = dirSchema.getPaths();
-        this.appRootPath = activeProjectDetails.getAppRootPath();
+        this.pathLayout = pathLayout;
+        this.pathCount = pathLayout.getPaths().size();
+        this.paths = pathLayout.getPaths();
+        this.targetPath = targetPath;
         if(pathCount > MAX_FILE_CREATION)
         {
             throw new IllegalStateException("Maximum path creation reached.");
@@ -33,11 +32,11 @@ public class CreateFileStructureAction implements FileAction {
         for(String path : paths)
         {
             try {
-                Logger.info("Create path: " + appRootPath + path);
-                IO.createPathIfNotExist(appRootPath + path);
+                Logger.info("Create path: " + targetPath + path);
+                IO.createPathIfNotExist(targetPath + path);
             } 
             catch (FileAlreadyExistsException e) {
-                Logger.warn("taskId: " + dirSchema.getId() + "File path already exists: " + path);
+                Logger.warn("taskId: " + pathLayout.getId() + "File path already exists: " + path);
             }
         }
     }
@@ -46,16 +45,16 @@ public class CreateFileStructureAction implements FileAction {
     {
         for(String path : paths)
         {
-            Logger.info("Delete path: " + appRootPath + path);
-            IO.deletePath(appRootPath + path);
+            Logger.info("Delete path: " + targetPath + path);
+            IO.deletePath(targetPath + path);
         }
     }
 
     @Override
     public void execute() throws IOException {
-        Logger.info("START: [PATH CREATION] -> " + dirSchema.getId());
+        Logger.info("START: [PATH CREATION] -> " + pathLayout.getId());
         createPaths();
-        Logger.info("END: [PATH CREATION] -> " + dirSchema.getId());
+        Logger.info("END: [PATH CREATION] -> " + pathLayout.getId());
     }
 
     @Override
