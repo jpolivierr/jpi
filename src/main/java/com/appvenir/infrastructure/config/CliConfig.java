@@ -4,27 +4,27 @@ import java.util.List;
 
 public class CliConfig {
     private final String JavaProjectPath;
-    private final String schemasPath;
+    private final String workSpaceTemplatePath;
     private final List<String> buildToolFileNames;
 
     private CliConfig(Builder builder)
     {
         this.JavaProjectPath = builder.JavaProjectPath;
-        this.schemasPath = builder.schemasPath;
+        this.workSpaceTemplatePath = builder.workSpaceTemplatePath;
         this.buildToolFileNames = builder.buildToolFileNames;
     }
 
     public static class Builder {
         private String JavaProjectPath;
-        private String schemasPath;
+        private String workSpaceTemplatePath;
         private List<String> buildToolFileNames;
 
         public Builder setJavaProjectPath(String javaProjectPath) {
             JavaProjectPath = javaProjectPath;
             return this;
         }
-        public Builder setSchemasPath(String schemasPath) {
-            this.schemasPath = schemasPath;
+        public Builder setWorkSpaceTemplatePath(String workSpaceTemplatePath) {
+            this.workSpaceTemplatePath = workSpaceTemplatePath;
             return this;
         }
         public Builder setBuildToolFileNames(List<String> buildToolFileNames) {
@@ -36,15 +36,14 @@ public class CliConfig {
         {
             return new CliConfig(this);
         }
-        
     }
 
     public String getJavaProjectPath() {
         return JavaProjectPath;
     }
 
-    public String getSchemasPath() {
-        return schemasPath;
+    public String getWorkspaceTemplatePath() {
+        return workSpaceTemplatePath;
     }
 
     public List<String> getBuildToolFileNames() {

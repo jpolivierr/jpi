@@ -1,14 +1,14 @@
 package com.appvenir.init;
 
 import com.appvenir.core.ActiveProjectDetails;
-import com.appvenir.core.model.Schemas;
+import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.infrastructure.system.logger.Logger;
 
 public class CliContext {
     private static boolean initialized = false;
     private static CliConfig cliConfig;
-    private static Schemas schemas;
+    private static WorkspaceTemplate workspaceTemplate;
     private static ActiveProjectDetails activeProjectDetails;
 
     private CliContext() {}
@@ -21,11 +21,11 @@ public class CliContext {
         }
     }
 
-    private static void setSchemas(Schemas currentSchemas)
+    private static void setWorkspaceTemplate(WorkspaceTemplate currentWorkspaceTemplate)
     {
-        if(schemas == null)
+        if(workspaceTemplate == null)
         {
-            schemas = currentSchemas;
+            workspaceTemplate = currentWorkspaceTemplate;
         }
     }
 
@@ -37,12 +37,12 @@ public class CliContext {
         }
     }
 
-    public static void initialize(CliConfig currentCliConfig, Schemas currentSchemas, ActiveProjectDetails activeProjectDetails)
+    public static void initialize(CliConfig currentCliConfig, WorkspaceTemplate currentWorkspaceTemplate, ActiveProjectDetails activeProjectDetails)
     {
         if(!initialized)
         {
             setCliConfig(currentCliConfig);
-            setSchemas(currentSchemas);
+            setWorkspaceTemplate(currentWorkspaceTemplate);
             setActiveProjectDetails(activeProjectDetails);
         }
         else 
@@ -58,11 +58,11 @@ public class CliContext {
         return cliConfig;
     }
 
-    public static Schemas getSchemas() {
-        if (schemas == null) {
+    public static WorkspaceTemplate getWorkspaceTemplate() {
+        if (workspaceTemplate == null) {
             throw new IllegalStateException("CliContext has not been initialized.");
         }
-        return schemas;
+        return workspaceTemplate;
     }
 
     public static ActiveProjectDetails getActiveProjectDetails() {

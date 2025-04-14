@@ -2,10 +2,10 @@ package com.appvenir.init;
 
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.ActiveProjectDetailsFactory;
-import com.appvenir.core.model.Schemas;
+import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.infrastructure.loaders.ConfigLoader;
-import com.appvenir.infrastructure.loaders.SchemaPropertyLoader;
+import com.appvenir.infrastructure.loaders.WorkspaceTemplateLoader;
 import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.infrastructure.system.parcers.file.YamlParser;
 
@@ -22,14 +22,14 @@ public class CliLauncher {
         ConfigLoader configLoader = ConfigLoader.getInstance(configFile);
         CliConfig cliConfig = configLoader.getCliConfig();
         
-        SchemaPropertyLoader schemaPropertyLoader = SchemaPropertyLoader.getInstance(YamlParser.newInstant());
-        Schemas schemas = schemaPropertyLoader.getSchemas(cliConfig.getSchemasPath(), Schemas.class);
+        WorkspaceTemplateLoader workspaceTemplateLoader = WorkspaceTemplateLoader.getInstance(YamlParser.newInstant());
+        WorkspaceTemplate workspaceTemplate = workspaceTemplateLoader.getWorkspaceTemplate(cliConfig.getWorkspaceTemplatePath(), WorkspaceTemplate.class);
 
         String projectRootPath = System.getProperty("user.dir");
         ActiveProjectDetailsFactory activeProjectDetailsFactory = ActiveProjectDetailsFactory.newInstance(projectRootPath, cliConfig);
         ActiveProjectDetails activeProjectDetails = activeProjectDetailsFactory.createFromProject();
 
-        CliContext.initialize(cliConfig, schemas, activeProjectDetails);
+        CliContext.initialize(cliConfig, workspaceTemplate, activeProjectDetails);
     }
 
     public static synchronized void launch() {

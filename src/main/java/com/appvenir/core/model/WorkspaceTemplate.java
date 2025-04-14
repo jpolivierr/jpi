@@ -7,11 +7,12 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class Schemas {
+public class WorkspaceTemplate{
     private List<PathLayout> pathLayouts;
     private Map<String, String> packages;
+    private List<PackageGroup> packageGroups;
 
-    public Schemas() {
+    public WorkspaceTemplate() {
         this.pathLayouts = new ArrayList<>();
         this.packages = new HashMap<>();
     }
@@ -39,6 +40,14 @@ public class Schemas {
 
     public void setPackages(Map<String, String> packages) {
         this.packages = packages;
+    }
+
+    public List<PackageGroup> getPackageGroups() {
+        return packageGroups;
+    }
+
+    public void setPackageGroups(List<PackageGroup> packageGroups) {
+        this.packageGroups = packageGroups;
     }
 }
 

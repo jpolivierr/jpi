@@ -3,7 +3,17 @@ pathLayouts:
     paths:
       - "/application"
       - "/interface"
+
 packages:
-  controller: "interface.rest"
-  web: "interface.web"
-  webFilters: "interface.filters"
+  controller: "controller"
+  service: "service"
+  repository: "repository"
+  mapper: "mapper"
+
+packageGroups:
+  - id: "layered"
+    packages:
+      - controller
+      - service
+      - repository
+      - mapper

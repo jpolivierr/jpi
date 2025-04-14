@@ -55,7 +55,7 @@ public class ConfigLoader {
     public CliConfig buildCliConfig()
     {
         return new CliConfig.Builder()
-            .setSchemasPath(properties.getProperty("app.schemas"))
+            .setWorkSpaceTemplatePath(properties.getProperty("app.schemas"))
             .setJavaProjectPath(properties.getProperty("project.java.dir"))
             .setBuildToolFileNames(getBuildToolFileNames())
             .build();

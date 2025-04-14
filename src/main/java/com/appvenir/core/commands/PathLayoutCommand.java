@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.model.PathLayout;
-import com.appvenir.core.model.Schemas;
+import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.init.CliContext;
 
@@ -35,8 +35,8 @@ public class PathLayoutCommand implements Runnable {
     public void run() {
 
         ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
-        Schemas schemas = CliContext.getSchemas();        
-        PathLayout pathLayout = schemas.getPathLayout(schemaId)
+        WorkspaceTemplate workspaceTemplate = CliContext.getWorkspaceTemplate();        
+        PathLayout pathLayout = workspaceTemplate.getPathLayout(schemaId)
                                 .orElseThrow(() -> new NoSuchElementException("Could not find a pathLayout with id: " + schemaId));
 
         CreateFileStructureAction createFileStructureAction = new CreateFileStructureAction(pathLayout, activeProjectDetails.getAppRootPath());

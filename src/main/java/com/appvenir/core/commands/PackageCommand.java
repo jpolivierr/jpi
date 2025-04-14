@@ -6,9 +6,8 @@ import java.util.Map;
 
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.PackageName;
-import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.action.CreatePackageAction;
-import com.appvenir.core.model.Schemas;
+import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.init.CliContext;
 import com.appvenir.utils.Condition;
@@ -38,8 +37,8 @@ public class PackageCommand extends Reversable implements Runnable{
     @Override
     public void run() {
         ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
-        Schemas schemas = CliContext.getSchemas();
-        Map<String, String> packages = schemas.getPackages();
+        WorkspaceTemplate workspaceTemplate = CliContext.getWorkspaceTemplate();
+        Map<String, String> packages = workspaceTemplate.getPackages();
 
         String name = packages.get(this.packageId);
         Condition.notNullOrEmpty(name, "Could not find package name with the provided id: " + this.packageId);
