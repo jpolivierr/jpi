@@ -22,4 +22,37 @@ public class StringUtils {
     {
         return "/" + packageName.value().replaceAll("\\.", "/");
     }
+
+    public static String getLastPackageSegment(PackageName packageName) 
+    {
+        String packageValue = packageName.value();
+        int lastDotIndex = packageValue.lastIndexOf(".");
+        return lastDotIndex != -1 ? packageValue.substring(lastDotIndex + 1) : packageValue;
+    }
+
+    public static String addPackageIdToFileName(String fileName, String packageId)
+    {
+        String lastName = StringUtils.capitalizeFirstLetter(packageId);
+        return StringUtils.capitalizeFirstLetter(fileName) + lastName;
+    }
+
+    public static String createJavaFile(String fileName)
+    {
+       return fileName + ".java";
+    }
+
+    public static PackageName replaceLastSegment(PackageName packageName, String newLastSegment) {
+        String originalPackage = packageName.value();
+        if (originalPackage == null || originalPackage.isEmpty()) {
+            throw new IllegalArgumentException("Original package name cannot be null or empty.");
+        }
+
+        int lastDotIndex = originalPackage.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return PackageName.create(newLastSegment);
+        }
+
+        return PackageName.create(originalPackage.substring(0, lastDotIndex + 1) + newLastSegment);
+    }
+    
 }
