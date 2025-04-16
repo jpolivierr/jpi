@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.appvenir.core.ActiveProjectDetails;
-import com.appvenir.core.PackageName;
 import com.appvenir.core.action.CreatePackageAction;
 import com.appvenir.core.model.WorkspaceTemplate;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.core.valueObjects.PackageName;
 import com.appvenir.init.CliContext;
+import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.Condition;
 import com.appvenir.utils.StringUtils;
 
