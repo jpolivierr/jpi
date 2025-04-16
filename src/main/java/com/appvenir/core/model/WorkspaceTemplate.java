@@ -26,6 +26,15 @@ public class WorkspaceTemplate{
         return Optional.empty();
     }
 
+    public Optional<PackageGroup> getPackageGroup(String id) {
+        for (PackageGroup packageGroup : packageGroups) {
+            if (packageGroup.getId().equals(id)) {
+                return Optional.of(packageGroup);
+            }
+        }
+        return Optional.empty();
+    }
+
     public List<PathLayout> getPathLayouts() {
         return pathLayouts;
     }

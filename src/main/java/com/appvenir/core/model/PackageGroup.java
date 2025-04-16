@@ -1,15 +1,15 @@
 package com.appvenir.core.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PackageGroup {
     private String id;
-    private List<String> packages;
+    private Map<String, String> packages;
 
     public PackageGroup()
     {
-        this.packages = new ArrayList<>();
+        this.packages = new HashMap<>();
     }
 
     public String getId() {
@@ -18,10 +18,10 @@ public class PackageGroup {
     public void setId(String id) {
         this.id = id;
     }
-    public List<String> getPackages() {
+    public Map<String, String> getPackages() {
         return packages;
     }
-    public void setPackages(List<String> packages) {
+    public void setPackages(Map<String, String>packages) {
         this.packages = packages;
     }
 
