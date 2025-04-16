@@ -3,10 +3,11 @@ package com.appvenir.core;
 import java.util.List;
 import java.util.Optional;
 
+import com.appvenir.core.valueObjects.PackageName;
 import com.appvenir.infrastructure.config.CliConfig;
-import com.appvenir.infrastructure.system.io.IO;
-import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolFactory;
-import com.appvenir.infrastructure.system.parcers.buildTool.BuildToolParser;
+import com.appvenir.system.io.IO;
+import com.appvenir.system.parcers.buildTool.BuildToolFactory;
+import com.appvenir.system.parcers.buildTool.BuildToolParser;
 
 public class ActiveProjectDetailsFactory {
     private final String rootPath;

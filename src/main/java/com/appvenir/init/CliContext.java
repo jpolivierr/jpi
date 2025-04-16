@@ -3,7 +3,7 @@ package com.appvenir.init;
 import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.config.CliConfig;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.system.logger.Logger;
 
 public class CliContext {
     private static boolean initialized = false;

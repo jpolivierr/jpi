@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.appvenir.infrastructure.config.CliConfig;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.system.logger.Logger;
 
 public class ConfigLoader {
     private static ConfigLoader instance;

@@ -1,6 +1,6 @@
 package com.appvenir.utils;
 
-import com.appvenir.core.PackageName;
+import com.appvenir.core.valueObjects.PackageName;
 
 public class StringUtils {
     public static String capitalizeFirstLetter(String input) {

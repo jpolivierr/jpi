@@ -1,4 +1,4 @@
-package com.appvenir.infrastructure.system.logger;
+package com.appvenir.system.logger;
 
 public class Logger {
 

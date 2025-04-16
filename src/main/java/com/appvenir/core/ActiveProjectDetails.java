@@ -2,6 +2,7 @@ package com.appvenir.core;
 
 import java.nio.file.Paths;
 
+import com.appvenir.core.valueObjects.PackageName;
 import com.appvenir.utils.StringUtils;
 
 public class ActiveProjectDetails {

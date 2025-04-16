@@ -5,8 +5,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
 import com.appvenir.core.model.PathLayout;
-import com.appvenir.infrastructure.system.io.IO;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.system.io.IO;
+import com.appvenir.system.logger.Logger;
 
 public class CreateFileStructureAction implements FileAction {
     private final int MAX_FILE_CREATION = 5;

@@ -5,9 +5,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.appvenir.core.PackageName;
-import com.appvenir.infrastructure.system.io.IO;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.core.valueObjects.PackageName;
+import com.appvenir.system.io.IO;
+import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.StringUtils;
 
 public class CreatePackageAction implements FileAction {

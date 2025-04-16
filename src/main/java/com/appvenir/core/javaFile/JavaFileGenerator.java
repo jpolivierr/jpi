@@ -1,5 +1,5 @@
 package com.appvenir.core.javaFile;
-import com.appvenir.infrastructure.system.io.IO;
+import com.appvenir.system.io.IO;
 public class JavaFileGenerator {
     private final String filePath;
     private final JavaFileDetails javaFileDetails;

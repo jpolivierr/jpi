@@ -6,8 +6,8 @@ import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.infrastructure.loaders.ConfigLoader;
 import com.appvenir.infrastructure.loaders.WorkspaceTemplateLoader;
-import com.appvenir.infrastructure.system.logger.Logger;
-import com.appvenir.infrastructure.system.parcers.file.YamlParser;
+import com.appvenir.system.logger.Logger;
+import com.appvenir.system.parcers.file.YamlParser;
 
 public class CliLauncher {
 

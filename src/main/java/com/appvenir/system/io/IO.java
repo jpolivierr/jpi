@@ -1,8 +1,9 @@
-package com.appvenir.infrastructure.system.io;
+package com.appvenir.system.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -10,10 +11,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.core.ActiveProjectDetails;
+import com.appvenir.init.CliContext;
+import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.Condition;
 
 public class IO {
@@ -61,13 +65,47 @@ public class IO {
         }
     }
     
-
     public static void deletePath(String path) throws IOException
     {
         Condition.notNull(path, "Path cannot be null");
         Path filePath = Paths.get(path).normalize();
         Files.deleteIfExists(filePath);
     }
+
+    public static void deleteAllFromProjectRoot(String path) throws IOException {
+        ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
+        String rootPath = activeProjectDetails.getAppRootPath();
+    
+        Condition.notNull(rootPath, "Root path cannot be null");
+        Condition.notNull(path, "Path cannot be null");
+    
+        Path root = Paths.get(rootPath).normalize().toAbsolutePath();
+        Path current = Paths.get(path).normalize().toAbsolutePath();
+    
+        while (current != null && Files.exists(current)) {
+            if (!current.startsWith(root)) {
+                break;
+            }
+    
+            // deleteRecursively(current);
+            current = current.getParent();
+        }
+    }
+
+    private static void deleteRecursively(Path path) throws IOException {
+    if (Files.notExists(path)) return;
+
+    Files.walk(path)
+         .sorted(Comparator.reverseOrder()) // ensures files/subfolders are deleted before their parent
+         .forEach(p -> {
+             try {
+                 Files.delete(p);
+             } catch (IOException e) {
+                 throw new UncheckedIOException(e);
+             }
+         });
+}
+    
 
     public static String getFileInputStream(String filePath)
     {
@@ -149,3 +187,4 @@ public class IO {
         return name.substring(lastDot + 1);
     }
 }
+

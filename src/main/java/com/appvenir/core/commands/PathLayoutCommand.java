@@ -6,8 +6,8 @@ import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.model.PathLayout;
 import com.appvenir.core.model.WorkspaceTemplate;
-import com.appvenir.infrastructure.system.logger.Logger;
 import com.appvenir.init.CliContext;
+import com.appvenir.system.logger.Logger;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;

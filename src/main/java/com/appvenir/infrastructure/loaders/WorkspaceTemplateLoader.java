@@ -1,8 +1,9 @@
 package com.appvenir.infrastructure.loaders;
 
 import java.io.IOException;
-import com.appvenir.infrastructure.system.logger.Logger;
-import com.appvenir.infrastructure.system.parcers.file.FileParser;
+
+import com.appvenir.system.logger.Logger;
+import com.appvenir.system.parcers.file.FileParser;
 
 public class WorkspaceTemplateLoader {
     private static WorkspaceTemplateLoader instance;
