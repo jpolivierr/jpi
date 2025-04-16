@@ -1,6 +1,6 @@
 package com.appvenir.core.valueObjects;
 
-import com.appvenir.exceptions.InvalidJavaClassName;
+import com.appvenir.exceptions.InvalidJavaClassNameException;
 import com.appvenir.utils.CliUtils;
 import com.appvenir.utils.StringUtils;
 
@@ -42,7 +42,7 @@ public class JavaClassName {
     {
         if (!CliUtils.isValidJavaClassName(value)) 
         {
-            throw new InvalidJavaClassName(value);
+            throw new InvalidJavaClassNameException(value);
         }
     }
     

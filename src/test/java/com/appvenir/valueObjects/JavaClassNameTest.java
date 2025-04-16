@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import com.appvenir.core.valueObjects.JavaClassName;
-import com.appvenir.exceptions.InvalidJavaClassName;
+import com.appvenir.exceptions.InvalidJavaClassNameException;
 
 public class JavaClassNameTest {
 
@@ -28,59 +28,59 @@ public class JavaClassNameTest {
 
     @Test
     void should_throw_InvalidJavaClassName() {
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("class");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("1User");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("123Class");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("My-Class");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("@User");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("My Class");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("User!");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("user*");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create(null);
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("User.");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create(".User");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("new User");
         });
 
-        assertThrows(InvalidJavaClassName.class, () -> {
+        assertThrows(InvalidJavaClassNameException.class, () -> {
             JavaClassName.create("@interface");
         });
     }
