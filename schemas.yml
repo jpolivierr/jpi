@@ -5,15 +5,34 @@ pathLayouts:
       - "/interface"
 
 packages:
-  controller: "controller"
-  service: "service"
-  repository: "repository"
-  mapper: "mapper"
+  mapper: appvenir.application.mapper
+  service: appvenir.application.service
+  useCase: appvenir.application.useCase
+  controller: appvenir.interfaces.controller
+  repository: appvenir.infrastructure.repository
+  config: appvenir.infrastructure.config
+  securityConfig: appvenir.infrastructure.config
+  security: appvenir.infrastructure.security
 
 packageGroups:
+  - id: "clean"
+    packages:
+      mapper: appvenir.application.mapper
+      service: appvenir.application.service
+      useCase: appvenir.application.useCase
+      controller: appvenir.interfaces.controller
+      repository: appvenir.infrastructure.repository
+      config: appvenir.infrastructure.config
+      securityConfig: appvenir.infrastructure.config
+      security: appvenir.infrastructure.security
+      
   - id: "layered"
     packages:
-      - controller
-      - service
-      - repository
-      - mapper
+      mapper: appvenir.mapper
+      service: appvenir.service
+      useCase: appvenir.useCase
+      controller: appvenir.controller
+      repository: appvenir.repository
+      config: appvenir.config
+      securityConfig: appvenir.config
+      security: appvenir.security
