@@ -20,7 +20,11 @@ public class PackageName {
         return value;
     }
 
-    private static boolean isValidPackageName(String name) {
+    public PackageName add(String name) {
+        return new PackageName(this.value + "." + name);
+    }
+
+    private boolean isValidPackageName(String name) {
         if (name == null || name.isEmpty()) return false;
 
         String[] parts = name.split("\\.");

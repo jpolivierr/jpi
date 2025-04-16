@@ -13,6 +13,7 @@ import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.ActiveProjectDetailsFactory;
 import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.commands.PackageCommand;
+import com.appvenir.core.commands.PackageGroupCommand;
 import com.appvenir.core.commands.PathLayoutCommand;
 import com.appvenir.core.javaFile.AccessModifier;
 import com.appvenir.core.javaFile.ClassDetails;
@@ -20,6 +21,7 @@ import com.appvenir.core.javaFile.JavaFileDetails;
 import com.appvenir.core.javaFile.JavaFileGenerator;
 import com.appvenir.core.javaFile.PackageName;
 import com.appvenir.core.javaFile.TypeVariable;
+import com.appvenir.core.model.PackageGroup;
 import com.appvenir.infrastructure.loaders.ConfigLoader;
 import com.appvenir.infrastructure.providers.MapperProvider;
 import com.appvenir.infrastructure.system.logger.Logger;
@@ -45,7 +47,8 @@ import picocli.CommandLine.Command;
                  """,
     subcommands = { 
         PathLayoutCommand.class,
-        PackageCommand.class
+        PackageCommand.class,
+        PackageGroupCommand.class
     }
 )
 public class App implements Runnable
