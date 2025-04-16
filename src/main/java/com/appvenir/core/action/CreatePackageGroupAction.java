@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.appvenir.core.PackageName;
-import com.appvenir.infrastructure.system.io.IO;
-import com.appvenir.infrastructure.system.logger.Logger;
+import com.appvenir.core.valueObjects.JavaClassName;
+import com.appvenir.core.valueObjects.PackageName;
+import com.appvenir.system.io.IO;
+import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.StringUtils;
 
 public class CreatePackageGroupAction implements FileAction {
@@ -17,18 +18,6 @@ public class CreatePackageGroupAction implements FileAction {
     private final String targetPath;
     private final List<String> paths;
     private boolean hasFiles = false;
-
-    public CreatePackageGroupAction(Map<String, String> pathMap, String[] fileNames, String targetPath)
-    {
-        if(pathMap.size() > MAX_FILE_CREATION)
-        {
-            throw new IllegalStateException("Maximum path creation reached.");
-        }
-        this.pathMap = pathMap;
-        this.targetPath = targetPath;
-        this.hasFiles = fileNames.length > 0;
-        this.paths = generatePath(fileNames);
-    }
 
     public CreatePackageGroupAction(Map<String, String> pathMap, String[] fileNames, String targetPath, boolean inverse)
     {
@@ -86,8 +75,8 @@ public class CreatePackageGroupAction implements FileAction {
             {
                 for(String fileName : fileNames)
                 {
-                    String javaFileName = StringUtils.createJavaFile(StringUtils.addPackageIdToFileName(fileName, packageId));
-                    filePaths.add(targetPath + parentPath + "/" + javaFileName);
+                    JavaClassName javaClassName = JavaClassName.create(fileName).suffixed(packageId);
+                    filePaths.add(targetPath + parentPath + javaClassName.getFilePath());
                 }
             }else {
                 filePaths.add(targetPath + parentPath);
@@ -98,7 +87,6 @@ public class CreatePackageGroupAction implements FileAction {
 
     public List<String> generateInversePath(String[] fileNames)
     {
-
         List<String> filePaths = new ArrayList<>();
 
         for(String fileName : fileNames) {
@@ -110,14 +98,14 @@ public class CreatePackageGroupAction implements FileAction {
 
                 PackageName packageName = PackageName.create(currentPackage);
                 String lastPackageSegment = StringUtils.getLastPackageSegment(packageName);
-                PackageName featurePackage = StringUtils.replaceLastSegment(packageName, fileName.toLowerCase()).add(lastPackageSegment);
+                JavaClassName javaClassName = JavaClassName.create(fileName);
+                PackageName featurePackage = StringUtils.replaceLastSegment(packageName, javaClassName.value()).add(lastPackageSegment);
                 String parentPath = StringUtils.convertPackagetoPath(featurePackage);
-                String javaFileName = StringUtils.createJavaFile(StringUtils.addPackageIdToFileName(fileName, packageId));
-                filePaths.add(targetPath + parentPath + "/" + javaFileName);
+                JavaClassName javaFileName = javaClassName.suffixed(packageId);
+                filePaths.add(targetPath + parentPath + javaFileName.getFilePath());
             }
 
         }
-
         return filePaths;
     }
 
