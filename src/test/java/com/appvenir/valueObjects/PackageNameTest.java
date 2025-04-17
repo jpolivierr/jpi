@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import com.appvenir.core.exceptions.InvalidPackageNameException;
 import com.appvenir.core.valueObjects.PackageName;
-import com.appvenir.exceptions.InvalidPackageNameException;
 
 public class PackageNameTest {
 

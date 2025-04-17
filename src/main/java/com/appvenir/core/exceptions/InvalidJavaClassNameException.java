@@ -1,4 +1,4 @@
-package com.appvenir.exceptions;
+package com.appvenir.core.exceptions;
 
 public class InvalidJavaClassNameException extends RuntimeException {
     public InvalidJavaClassNameException(String name)

@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import com.appvenir.core.exceptions.InvalidJavaClassNameException;
 import com.appvenir.core.valueObjects.JavaClassName;
-import com.appvenir.exceptions.InvalidJavaClassNameException;
 
 public class JavaClassNameTest {
 

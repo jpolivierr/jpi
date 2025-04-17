@@ -1,4 +1,4 @@
-package com.appvenir.exceptions;
+package com.appvenir.core.exceptions;
 
 public class InvalidPackageNameException extends RuntimeException{
     public InvalidPackageNameException(String value)

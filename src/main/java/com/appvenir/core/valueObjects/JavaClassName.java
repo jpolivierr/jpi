@@ -1,6 +1,6 @@
 package com.appvenir.core.valueObjects;
 
-import com.appvenir.exceptions.InvalidJavaClassNameException;
+import com.appvenir.core.exceptions.InvalidJavaClassNameException;
 import com.appvenir.utils.CliUtils;
 import com.appvenir.utils.StringUtils;
 
