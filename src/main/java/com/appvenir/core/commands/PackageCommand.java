@@ -8,7 +8,7 @@ import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreatePackageAction;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.core.valueObjects.PackageName;
-import com.appvenir.init.CliContext;
+import com.appvenir.infrastructure.init.CliContext;
 import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.Condition;
 import com.appvenir.utils.StringUtils;
@@ -36,8 +36,8 @@ public class PackageCommand extends Reversable implements Runnable{
 
     @Override
     public void run() {
-        ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
-        WorkspaceTemplate workspaceTemplate = CliContext.getWorkspaceTemplate();
+        ActiveProjectDetails activeProjectDetails = CliContext.getBean(ActiveProjectDetails.class);
+        WorkspaceTemplate workspaceTemplate = CliContext.getBean(WorkspaceTemplate.class);
         Map<String, String> packages = workspaceTemplate.getPackages();
 
         String name = packages.get(this.packageId);

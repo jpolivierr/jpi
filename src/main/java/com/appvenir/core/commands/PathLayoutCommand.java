@@ -6,7 +6,7 @@ import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreateFileStructureAction;
 import com.appvenir.core.model.PathLayout;
 import com.appvenir.core.model.WorkspaceTemplate;
-import com.appvenir.init.CliContext;
+import com.appvenir.infrastructure.init.CliContext;
 import com.appvenir.system.logger.Logger;
 
 import picocli.CommandLine.Command;
@@ -33,9 +33,9 @@ public class PathLayoutCommand implements Runnable {
 
     @Override
     public void run() {
+        ActiveProjectDetails activeProjectDetails = CliContext.getBean(ActiveProjectDetails.class);
+        WorkspaceTemplate workspaceTemplate = CliContext.getBean(WorkspaceTemplate.class);
 
-        ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
-        WorkspaceTemplate workspaceTemplate = CliContext.getWorkspaceTemplate();        
         PathLayout pathLayout = workspaceTemplate.getPathLayout(schemaId)
                                 .orElseThrow(() -> new NoSuchElementException("Could not find a pathLayout with id: " + schemaId));
 

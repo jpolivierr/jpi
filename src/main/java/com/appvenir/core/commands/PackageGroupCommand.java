@@ -5,7 +5,7 @@ import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreatePackageGroupAction;
 import com.appvenir.core.model.PackageGroup;
 import com.appvenir.core.model.WorkspaceTemplate;
-import com.appvenir.init.CliContext;
+import com.appvenir.infrastructure.init.CliContext;
 import com.appvenir.system.logger.Logger;
 
 import picocli.CommandLine.Command;
@@ -37,8 +37,8 @@ public class PackageGroupCommand extends Reversable implements Runnable{
 
     @Override
     public void run() {
-        ActiveProjectDetails activeProjectDetails = CliContext.getActiveProjectDetails();
-        WorkspaceTemplate workspaceTemplate = CliContext.getWorkspaceTemplate();
+        ActiveProjectDetails activeProjectDetails = CliContext.getBean(ActiveProjectDetails.class);
+        WorkspaceTemplate workspaceTemplate = CliContext.getBean(WorkspaceTemplate.class);
 
         PackageGroup packageGroup = workspaceTemplate.getPackageGroup(packageGroupId)
                     .orElseThrow(() -> new NoSuchElementException("Could not find a package group with id: " + packageGroupId));
