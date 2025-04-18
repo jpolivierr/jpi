@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreatePackageAction;
+import com.appvenir.core.model.ActiveProjectDetails;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.core.valueObjects.PackageName;
 import com.appvenir.infrastructure.init.CliContext;

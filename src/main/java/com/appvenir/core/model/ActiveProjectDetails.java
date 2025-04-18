@@ -1,4 +1,4 @@
-package com.appvenir.core;
+package com.appvenir.core.model;
 
 import java.nio.file.Paths;
 

@@ -1,7 +1,7 @@
 package com.appvenir.infrastructure.init;
 
-import com.appvenir.core.ActiveProjectDetails;
-import com.appvenir.core.ActiveProjectDetailsFactory;
+import com.appvenir.core.factory.ActiveProjectDetailsFactory;
+import com.appvenir.core.model.ActiveProjectDetails;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.infrastructure.loaders.ConfigLoader;

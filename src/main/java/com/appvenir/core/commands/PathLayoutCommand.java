@@ -2,8 +2,8 @@ package com.appvenir.core.commands;
 
 import java.util.NoSuchElementException;
 
-import com.appvenir.core.ActiveProjectDetails;
 import com.appvenir.core.action.CreateFileStructureAction;
+import com.appvenir.core.model.ActiveProjectDetails;
 import com.appvenir.core.model.PathLayout;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.init.CliContext;

@@ -1,8 +1,9 @@
 package com.appvenir.core.commands;
 
 import java.util.NoSuchElementException;
-import com.appvenir.core.ActiveProjectDetails;
+
 import com.appvenir.core.action.CreatePackageGroupAction;
+import com.appvenir.core.model.ActiveProjectDetails;
 import com.appvenir.core.model.PackageGroup;
 import com.appvenir.core.model.WorkspaceTemplate;
 import com.appvenir.infrastructure.init.CliContext;

@@ -1,8 +1,9 @@
-package com.appvenir.core;
+package com.appvenir.core.factory;
 
 import java.util.List;
 import java.util.Optional;
 
+import com.appvenir.core.model.ActiveProjectDetails;
 import com.appvenir.core.valueObjects.PackageName;
 import com.appvenir.infrastructure.config.CliConfig;
 import com.appvenir.system.io.IO;
