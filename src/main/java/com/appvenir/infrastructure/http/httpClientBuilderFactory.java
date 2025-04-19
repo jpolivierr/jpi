@@ -4,7 +4,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpClient.Redirect;
 import java.time.Duration;
 
-public class httpClientBuilderFactory {
+public class HttpClientBuilderFactory {
 
     public static HttpClient.Builder getBaseHttpClentBuilder()
     {

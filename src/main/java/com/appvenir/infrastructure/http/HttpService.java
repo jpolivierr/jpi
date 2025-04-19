@@ -34,6 +34,22 @@ public class HttpService {
         }
     }
 
+    public <T> ResponseState<T> get(String url, BodyHandler<T> responseBodyHandler, Runnable runnable)
+    {
+        try {
+            HttpRequest request = HttpRequest
+                                .newBuilder(URI.create(url))
+                                .GET()
+                                .build();
+                                
+            runnable.run();
+            HttpResponse<T> response = httpClient.send(request, responseBodyHandler);
+            return ResponseState.newInstance(response.statusCode(), response.body());
+        } catch (IOException | InterruptedException e) {
+            return ResponseState.newInstance(500, new ErrorResponse(e));
+        }
+    }
+
     public <T> ResponseState<T> post(String url, Object requestBody, BodyHandler<T> responseBodyHandler)
     {
         try {

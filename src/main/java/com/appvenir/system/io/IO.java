@@ -1,8 +1,10 @@
 package com.appvenir.system.io;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -12,6 +14,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
 import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.Condition;
 
@@ -180,6 +185,32 @@ public class IO {
             return ""; // No extension
         }
         return name.substring(lastDot + 1);
+    }
+
+    public static void unzip(InputStream inputStream, Path targetDir) throws IOException {
+        if (!Files.exists(targetDir)) {
+            Files.createDirectories(targetDir);
+        }
+
+        try (ZipInputStream zipIn = new ZipInputStream(inputStream)) {
+            ZipEntry entry;
+            while ((entry = zipIn.getNextEntry()) != null) {
+                Path filePath = targetDir.resolve(entry.getName());
+                if (entry.isDirectory()) {
+                    Files.createDirectories(filePath);
+                } else {
+                    Files.createDirectories(filePath.getParent());
+                    try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(filePath))) {
+                        byte[] bytesIn = new byte[4096];
+                        int read;
+                        while ((read = zipIn.read(bytesIn)) != -1) {
+                            bos.write(bytesIn, 0, read);
+                        }
+                    }
+                }
+                zipIn.closeEntry();
+            }
+        }
     }
 }
 
