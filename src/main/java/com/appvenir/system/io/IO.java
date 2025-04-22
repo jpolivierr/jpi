@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -211,6 +212,18 @@ public class IO {
                 zipIn.closeEntry();
             }
         }
+    }
+
+    public static boolean isEmptyDirectory(Path path) 
+    {
+        boolean isEmpty = false;
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+            isEmpty = !stream.iterator().hasNext();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return isEmpty;
     }
 }
 

@@ -13,7 +13,7 @@ public class FileAttribute {
     private final boolean isZip;
     private final boolean isJar;
 
-    private FileAttribute(Path path) throws IOException {
+    public FileAttribute(Path path) throws IOException {
         if(!Files.exists(path))
         {
             throw new IllegalArgumentException("File does not exists: " + path.toString());
@@ -75,5 +75,13 @@ public class FileAttribute {
     public boolean isJar() {
         return isJar;
     }
+
+    @Override
+    public String toString() {
+        return "FileAttribute [size=" + size + ", ext=" + ext + ", name=" + name + ", isDirectory=" + isDirectory
+                + ", isZip=" + isZip + ", isJar=" + isJar + "]";
+    }
+
+    
 
 }

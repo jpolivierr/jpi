@@ -11,7 +11,8 @@ public record SpringProjectDetails(
     String packageName,
     String packaging,
     String javaVersion,
-    List<String> dependencies
+    List<String> dependencies,
+    String baseDir
 ) {
     public static Builder builder() {
         return new Builder();
@@ -28,6 +29,7 @@ public record SpringProjectDetails(
         private String packaging;
         private String javaVersion;
         private List<String> dependencies;
+        private String baseDir;
 
         public Builder type(String type) {
             this.type = type;
@@ -79,6 +81,11 @@ public record SpringProjectDetails(
             return this;
         }
 
+        public Builder baseDir(String baseDir) {
+            this.baseDir = baseDir;
+            return this;
+        }
+
         public SpringProjectDetails build() {
             return new SpringProjectDetails(
                 type,
@@ -90,7 +97,8 @@ public record SpringProjectDetails(
                 packageName,
                 packaging,
                 javaVersion,
-                dependencies
+                dependencies,
+                baseDir
             );
         }
     }
