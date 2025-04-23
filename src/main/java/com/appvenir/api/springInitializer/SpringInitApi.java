@@ -13,7 +13,6 @@ import com.appvenir.core.exceptions.FileNotFoundException;
 import com.appvenir.core.exceptions.NotADirectoryException;
 import com.appvenir.core.exceptions.NotAnEmptyDirectoryException;
 import com.appvenir.core.valueObjects.FileAttribute;
-import com.appvenir.infrastructure.http.HttpClientBuilderFactory;
 import com.appvenir.infrastructure.http.HttpService;
 import com.appvenir.infrastructure.http.ResponseState;
 import com.appvenir.system.io.IO;
@@ -28,10 +27,9 @@ public class SpringInitApi {
         this.httpService = httpService;
     }
 
-    public FileAttribute downloadSpringBootApp(String targetPath, Map<String, String> springProjectDetails) throws Exception
+    public FileAttribute downloadSpringBootApp(Path path, Map<String, String> springProjectDetails) throws Exception
     {
-        Path path = Paths.get(targetPath);
-        validate(path);
+        IO.pathDownloadValidation(path);
 
         ResponseState<InputStream> response = httpService.get(domain, springProjectDetails, BodyHandlers.ofInputStream());
 
@@ -59,48 +57,6 @@ public class SpringInitApi {
         } else {
             return null;
         }
-    }
-
-    private void validate(Path path)
-    {
-        if(!Files.exists(path))
-        {
-            throw new FileNotFoundException(path);
-        }
-
-        if(!Files.isDirectory(path))
-        {
-            throw new NotADirectoryException(path);
-        }
-
-        if(!IO.isEmptyDirectory(path))
-        {
-            throw new NotAnEmptyDirectoryException(path);
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        HttpService httpService = new HttpService(HttpClientBuilderFactory.getBaseHttpClentBuilder());
-        SpringInitApi springInitApi = new SpringInitApi("https://start.spring.io/starter.zip", httpService);
-
-            Map<String, String> springProjectDetails = Map.ofEntries(
-                Map.entry("type", "maven-project"),
-                Map.entry("language", "java"),
-                Map.entry("bootVersion", "3.4.4"),
-                Map.entry("groupId", "com.example"),
-                Map.entry("artifactId", "demo"),
-                Map.entry("name", "demo"),
-                Map.entry("description", "This is a demo"),
-                Map.entry("packageName", "com.example.demo"),
-                Map.entry("packaging", "jar"),
-                Map.entry("javaVersion", "17"),
-                Map.entry("dependencies", "data-jpa, data-jdbc")
-            );
-
-
-       FileAttribute fileAttribute = springInitApi.downloadSpringBootApp("/Users/Fred/temp", springProjectDetails);
-       System.out.println(fileAttribute);
     }
     
 }

@@ -18,6 +18,9 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import com.appvenir.core.exceptions.FileNotFoundException;
+import com.appvenir.core.exceptions.NotADirectoryException;
+import com.appvenir.core.exceptions.NotAnEmptyDirectoryException;
 import com.appvenir.system.logger.Logger;
 import com.appvenir.utils.Condition;
 
@@ -224,6 +227,24 @@ public class IO {
         }
 
         return isEmpty;
+    }
+
+    public static void pathDownloadValidation(Path path)
+    {
+        if(!Files.exists(path))
+        {
+            throw new FileNotFoundException(path);
+        }
+
+        if(!Files.isDirectory(path))
+        {
+            throw new NotADirectoryException(path);
+        }
+
+        if(!IO.isEmptyDirectory(path))
+        {
+            throw new NotAnEmptyDirectoryException(path);
+        }
     }
 }
 

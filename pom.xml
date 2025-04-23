@@ -45,6 +45,12 @@
       <artifactId>picocli</artifactId>
       <version>4.7.6</version>
   </dependency>
+  <!-- https://mvnrepository.com/artifact/org.jline/jline -->
+  <dependency>
+      <groupId>org.jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>3.29.0</version>
+  </dependency>
   </dependencies>
   
   <build>

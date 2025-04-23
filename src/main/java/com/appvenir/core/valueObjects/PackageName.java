@@ -35,5 +35,16 @@ public class PackageName {
         }
         return true;
     }
+
+    public String getLastSegment() {        
+        int lastDotIndex = value.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            // No dot means the whole value is the last segment
+            return value;
+        }
+    
+        return value.substring(lastDotIndex + 1);
+    }
+    
     
 }
